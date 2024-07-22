@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "sveklov.sso.v1;ssov1"; // for generation code on Go language
+
+service Auth {
+  rpc Register(RegisterRequest) returns (RegisterResponce);
+  rpc Login(LoginRequest) returns (LoginResponce);
+  rpc IsAdmin(IsAdminRequest) returns (IsAdminResponce);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponce { int64 user_id = 1; }
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  int32 app_id = 3; // id of the app(service) to login to
+}
+
+message LoginResponce {
+  string token = 1; // jwt
+}
+
+message IsAdminRequest { int64 user_id = 1; }
+
+message IsAdminResponce { bool is_admin = 1; }
